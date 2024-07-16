@@ -1,2 +1,2 @@
 # 2d-paint
-A 2-dimentional graphics editor 
+A 2-dimentional graphics editor written in TypeScript
