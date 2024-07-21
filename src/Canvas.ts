@@ -62,6 +62,19 @@ export class Canvas {
     }
 
     /**
+     * Clears the canvas by filling it with 'O' characters.
+     * The original width and height will be preserved.
+     */
+    clear(): void {
+        if (!this.isAlreadyCreated()) {
+            console.log('Canvas is not created yet, please execute \'create\' to create a canvas');
+            return;
+        }
+
+        this.createBlankCanvas();
+    }
+
+    /**
      * Prints the canvas to the console.
      */
     print(): void {

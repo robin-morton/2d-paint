@@ -1,4 +1,5 @@
 import { AbstractCommand } from "./AbstractCommand";
+import { ClearCommand } from "./ClearCommand";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
 import { NoopCommand } from "./NoopCommand";
@@ -10,7 +11,8 @@ export class CommandFactory {
     private static validInputs = ['exit',
         'create',
         'show',
-        'point'];
+        'point',
+        'clear'];
 
 
     static isValid(command: string): boolean {
@@ -34,6 +36,8 @@ export class CommandFactory {
                 return new ShowCommand();
             case 'point':
                 return new PointCommand();
+            case 'clear':
+                return new ClearCommand();
             case 'exit':
                 return new ExitCommand();
         }

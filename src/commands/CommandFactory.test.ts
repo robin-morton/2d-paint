@@ -1,3 +1,4 @@
+import { ClearCommand } from "./ClearCommand";
 import { CommandFactory } from "./CommandFactory";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
@@ -33,6 +34,12 @@ describe("CommandFactory", () => {
             const command = 'show';
             const result = CommandFactory.fromString(command);
             expect(result).toBeInstanceOf(ShowCommand);
+        });
+
+        it('should return a ClearCommand instance when called with \'clear\'', () => {
+            const command = 'clear';
+            const result = CommandFactory.fromString(command);
+            expect(result).toBeInstanceOf(ClearCommand);
         });
     });
 });

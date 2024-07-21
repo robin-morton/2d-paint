@@ -105,4 +105,45 @@ describe("Canvas", () => {
             expect(console.log).toHaveBeenNthCalledWith(3, `Please provide an X value between 1 and ${width} and a Y value between 1 and ${height}`);
         });
     });
+
+    describe('clear', () => {
+        it('should log a message when the canvas has not been created', () => {
+            canvas.clear();
+            expect(console.log).toHaveBeenCalledWith('Canvas is not created yet, please execute \'create\' to create a canvas');
+        });
+
+        it('should clear the canvas', () => {
+
+            const width = 3;
+            const height = 5;
+
+            const blankCanvas =
+                'O O O' + '\n' +
+                'O O O' + '\n' +
+                'O O O' + '\n' +
+                'O O O' + '\n' +
+                'O O O';
+
+            canvas.create(width, height);
+            canvas.print();
+            expect(console.log).toHaveBeenLastCalledWith(blankCanvas);
+
+            canvas.setPoint(new Point(2, 3), 'X');
+            canvas.print();
+
+            const expectedCanvas =
+                'O O O' + '\n' +
+                'O O O' + '\n' +
+                `O X O` + '\n' +
+                'O O O' + '\n' +
+                'O O O';
+
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+
+            canvas.clear();
+            canvas.print();
+
+            expect(console.log).toHaveBeenLastCalledWith(blankCanvas);
+        });
+    });
 });
