@@ -2,10 +2,15 @@ import { AbstractCommand } from "./AbstractCommand";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
 import { NoopCommand } from "./NoopCommand";
+import { PointCommand } from "./PointCommand";
+import { ShowCommand } from "./ShowCommand";
 
 export class CommandFactory {
 
-    private static validInputs = ['exit', 'create',];
+    private static validInputs = ['exit',
+        'create',
+        'show',
+        'point'];
 
 
     static isValid(command: string): boolean {
@@ -25,6 +30,10 @@ export class CommandFactory {
         switch (commandName) {
             case 'create':
                 return new CreateCommand();
+            case 'show':
+                return new ShowCommand();
+            case 'point':
+                return new PointCommand();
             case 'exit':
                 return new ExitCommand();
         }

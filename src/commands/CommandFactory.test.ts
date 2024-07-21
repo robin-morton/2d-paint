@@ -1,6 +1,8 @@
 import { CommandFactory } from "./CommandFactory";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
+import { PointCommand } from "./PointCommand";
+import { ShowCommand } from "./ShowCommand";
 
 describe("CommandFactory", () => {
     describe("fromString", () => {
@@ -19,6 +21,18 @@ describe("CommandFactory", () => {
             const command = 'create';
             const result = CommandFactory.fromString(command);
             expect(result).toBeInstanceOf(CreateCommand);
+        });
+
+        it('should return a PointCommand instance when called with \'point\'', () => {
+            const command = 'point';
+            const result = CommandFactory.fromString(command);
+            expect(result).toBeInstanceOf(PointCommand);
+        });
+
+        it('should return a ShowCommand instance when called with \'show\'', () => {
+            const command = 'show';
+            const result = CommandFactory.fromString(command);
+            expect(result).toBeInstanceOf(ShowCommand);
         });
     });
 });
