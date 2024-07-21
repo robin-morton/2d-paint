@@ -1,4 +1,5 @@
 import { Canvas } from "./Canvas";
+import { Point } from "./Point";
 describe("Canvas", () => {
 
     let canvas: Canvas;
@@ -10,7 +11,7 @@ describe("Canvas", () => {
         jest.spyOn(console, 'log').mockImplementation(() => { });
     });
 
-    afterAll(() => {
+    afterEach(() => {
         jest.resetAllMocks();
     });
     describe("create", () => {
@@ -56,6 +57,52 @@ describe("Canvas", () => {
             canvas.create(width, height);
 
             expect(console.log).toHaveBeenCalledWith('Canvas has already been created');
+        });
+    });
+
+    describe('setPoint', () => {
+        it('should set a point on the canvas', () => {
+            const width = 3;
+            const height = 5;
+            const x = 2;
+            const y = 3;
+            const pixel = 'X';
+            const expectedCanvas =
+                'O O O' + '\n' +
+                'O O O' + '\n' +
+                `O ${pixel} O` + '\n' +
+                'O O O' + '\n' +
+                'O O O';
+
+            canvas.create(width, height);
+            canvas.setPoint(new Point(x, y), pixel);
+            canvas.print();
+
+            expect(console.log).toHaveBeenNthCalledWith(3, expectedCanvas);
+        });
+
+        it('should not set a point on the canvas when the canvas has not been created', () => {
+            const x = 2;
+            const y = 3;
+            const pixel = 'Y';
+
+            canvas.setPoint(new Point(x, y), pixel);
+
+            expect(console.log).toHaveBeenNthCalledWith(1, 'Canvas is not created yet, please execute \'create\' to create a canvas');
+        });
+
+        it('should not set a point on the canvas when the point is out of canvas', () => {
+            const width = 3;
+            const height = 5;
+            const x = 6;
+            const y = 3;
+            const pixel = 'Z';
+
+            canvas.create(width, height);
+            canvas.setPoint(new Point(x, y), pixel);
+
+            expect(console.log).toHaveBeenNthCalledWith(2, `Point is out of canvas: x:${x}, y:${y}`);
+            expect(console.log).toHaveBeenNthCalledWith(3, `Please provide an X value between 1 and ${width} and a Y value between 1 and ${height}`);
         });
     });
 });
