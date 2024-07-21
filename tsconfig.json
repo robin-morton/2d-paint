@@ -1,0 +1,23 @@
+{
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "src/**/*.test.ts",
+        "node_modules",
+        "build",
+        "coverage",
+    ],
+    "compilerOptions": {
+        "target": "ES2015",
+        "module": "CommonJS",
+        "outDir": "build",
+        "strict": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node"
+    },
+    // "ts-node": {
+    //     "transpileOnly": true,
+    //     "transpiler": "@swc/core"
+    // },
+}
