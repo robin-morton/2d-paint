@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import { Canvas } from "./Canvas";
 import { CommandFactory } from "./commands/CommandFactory";
 import { ExitCommand } from "./commands";
 
@@ -8,6 +9,7 @@ const prompts: any = [{
     message: '',
 }]
 
+const canvas = new Canvas();
 
 const prompt = async () => {
     const answer = await inquirer.prompt(prompts);
@@ -25,7 +27,7 @@ const prompt = async () => {
         command.execute();
     }
 
-    command.execute(...args);
+    command.execute(canvas, ...args);
 
     await prompt();
 };

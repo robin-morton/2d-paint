@@ -1,10 +1,11 @@
 import { AbstractCommand } from "./AbstractCommand";
+import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
 import { NoopCommand } from "./NoopCommand";
 
 export class CommandFactory {
 
-    private static validInputs = ['exit'];
+    private static validInputs = ['exit', 'create',];
 
 
     static isValid(command: string): boolean {
@@ -22,6 +23,8 @@ export class CommandFactory {
         const commandName = command.split(' ')[0];
 
         switch (commandName) {
+            case 'create':
+                return new CreateCommand();
             case 'exit':
                 return new ExitCommand();
         }
