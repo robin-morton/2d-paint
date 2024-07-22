@@ -221,4 +221,51 @@ describe("Canvas", () => {
         });
 
     });
+
+    describe('area', () => {
+
+        it('should not draw a rectangle when the canvas has not been created', () => {
+            canvas.area(new Point(1, 1), new Point(3, 3), 'X');
+            expect(console.log).toHaveBeenLastCalledWith('Canvas is not created yet, please execute \'create\' to create a canvas');
+        });
+
+        it('should not draw a rectangle when a point is outside the canvas', () => {
+            const width = 3;
+            const height = 3;
+
+            canvas.create(width, height);
+            canvas.area(new Point(1, 1), new Point(width + 1, height + 2), 'X');
+
+            expect(console.log).toHaveBeenNthCalledWith(2, 'A point of the area is outside the canvas');
+            expect(console.log).toHaveBeenNthCalledWith(3, 'Please provide an X value between 1 and 3 and a Y value between 1 and 3');
+        });
+
+        it('should draw a rectangle on the canvas', () => {
+            const expectedCanvas =
+                'X X O' + '\n' +
+                'X X O' + '\n' +
+                'X X O';
+
+            canvas.create(3, 3);
+            canvas.area(new Point(1, 1), new Point(2, 3), 'X');
+
+            canvas.print();
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+        });
+
+        it('should draw a rectangle on the canvas when the points are swapped', () => {
+
+            const expectedCanvas =
+                'X X X' + '\n' +
+                'X X X' + '\n' +
+                'O O O';
+
+            canvas.create(3, 3);
+            canvas.area(new Point(3, 2), new Point(1, 1), 'X');
+
+            canvas.print();
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+
+        });
+    });
 });

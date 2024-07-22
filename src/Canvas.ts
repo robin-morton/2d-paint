@@ -90,6 +90,47 @@ export class Canvas {
         console.log(stringCanvas.join('\n'));
     }
 
+
+    /**
+     * Draws a rectangle on the canvas with one corner at point1
+     * and point2 being the corner opposite point1. If a pixel is not provided, a
+     * random pixel will be generated.
+     * 
+     * If the canvas has not been created, it will not draw a rectangle.
+     * 
+     * If a point of the rectangle is outside the canvas, it will not draw a
+     * rectangle.
+     * 
+     * @param point1 {Point} top left corner of the rectangle
+     * @param point2 {Point} bottom right corner of the rectangle
+     * @param pixel 
+     */
+    area(point1: Point, point2: Point, pixel = this.randomPixel()): void {
+        if (!this.isAlreadyCreated()) {
+            console.log('Canvas is not created yet, please execute \'create\' to create a canvas');
+            return;
+        }
+
+        if (!this.isWithinCanvas(point1) || !this.isWithinCanvas(point2)) {
+            console.log('A point of the area is outside the canvas');
+            console.log(`Please provide an X value between 1 and ${this.width} and a Y value between 1 and ${this.height}`);
+            return;
+        }
+
+        console.log('Filling area with pixel:', pixel);
+
+        const smallestX = Math.min(point1.getX(), point2.getX());
+        const largestX = Math.max(point1.getX(), point2.getX());
+        const largestY = Math.max(point1.getY(), point2.getY());
+        const smallestY = Math.min(point1.getY(), point2.getY());
+
+        for (let x = smallestX; x <= largestX; x++) {
+            for (let y = smallestY; y <= largestY; y++) {
+                this.setPoint(new Point(x, y), pixel);
+            }
+        }
+    }
+
     /**
      * Sets a point on the canvas to the given pixel. If a pixel is not
      * provided, a random pixel will be generated.

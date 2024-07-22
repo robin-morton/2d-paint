@@ -1,4 +1,5 @@
 import { AbstractCommand } from "./AbstractCommand";
+import { AreaCommand } from "./AreaCommand";
 import { ClearCommand } from "./ClearCommand";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
@@ -14,7 +15,8 @@ export class CommandFactory {
         'show',
         'point',
         'clear',
-        'line'];
+        'line',
+        'area',
 
 
     static isValid(command: string): boolean {
@@ -42,6 +44,8 @@ export class CommandFactory {
                 return new ClearCommand();
             case 'line':
                 return new LineCommand();
+            case 'area':
+                return new AreaCommand();
             case 'exit':
                 return new ExitCommand();
         }

@@ -9,11 +9,11 @@ export class PointCommand implements AbstractCommand {
         return !isNaN(num) && num >= 1;
     }
 
-    execute(canvas: Canvas, x: string, y: string, pixel: string): void {
+    execute(canvas: Canvas, x: string, y: string, pixel?: string): void {
         const x1 = parseInt(x);
         const y1 = parseInt(y);
 
-        if (!this.isValidCoordinate(x) || !this.isValidCoordinate(y)) {
+        if (!Point.isValid(x1, y1)) {
             throw new Error('Invalid x or y, x and y must be numbers greater than 0');
         }
 

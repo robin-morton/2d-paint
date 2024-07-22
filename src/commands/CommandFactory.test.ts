@@ -1,7 +1,9 @@
+import { AreaCommand } from "./AreaCommand";
 import { ClearCommand } from "./ClearCommand";
 import { CommandFactory } from "./CommandFactory";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
+import { LineCommand } from "./LineCommand";
 import { PointCommand } from "./PointCommand";
 import { ShowCommand } from "./ShowCommand";
 
@@ -46,6 +48,12 @@ describe("CommandFactory", () => {
             const command = 'line';
             const result = CommandFactory.fromString(command);
             expect(result).toBeInstanceOf(LineCommand);
+        });
+
+        it('should return an AreaCommand instance when called with \'area\'', () => {
+            const command = 'area';
+            const result = CommandFactory.fromString(command);
+            expect(result).toBeInstanceOf(AreaCommand);
         });
     });
 });
