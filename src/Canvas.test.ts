@@ -1,5 +1,6 @@
 import { Canvas } from "./Canvas";
 import { Point } from "./Point";
+import { toMatchCanvas } from "../tst/utils/jestMatcher";
 describe("Canvas", () => {
 
     let canvas: Canvas;
@@ -76,9 +77,7 @@ describe("Canvas", () => {
 
             canvas.create(width, height);
             canvas.setPoint(new Point(x, y), pixel);
-            canvas.print();
-
-            expect(console.log).toHaveBeenNthCalledWith(3, expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
         });
 
         it('should not set a point on the canvas when the canvas has not been created', () => {
@@ -129,7 +128,6 @@ describe("Canvas", () => {
             expect(console.log).toHaveBeenLastCalledWith(blankCanvas);
 
             canvas.setPoint(new Point(2, 3), 'X');
-            canvas.print();
 
             const expectedCanvas =
                 'O O O' + '\n' +
@@ -138,12 +136,10 @@ describe("Canvas", () => {
                 'O O O' + '\n' +
                 'O O O';
 
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
 
             canvas.clear();
-            canvas.print();
-
-            expect(console.log).toHaveBeenLastCalledWith(blankCanvas);
+            toMatchCanvas(canvas, blankCanvas);
         });
     });
 
@@ -174,8 +170,7 @@ describe("Canvas", () => {
             canvas.create(3, 3);
             canvas.drawLine(new Point(1, 1), new Point(3, 1), 'X');
 
-            canvas.print();
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
         });
 
         it('should draw a vertical line on the canvas', () => {
@@ -187,9 +182,7 @@ describe("Canvas", () => {
             canvas.create(3, 3);
             canvas.drawLine(new Point(1, 1), new Point(1, 3), 'X');
 
-            canvas.print();
-
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
         });
 
         it('should draw a diagonal line on the canvas', () => {
@@ -201,9 +194,7 @@ describe("Canvas", () => {
             canvas.create(3, 3);
 
             canvas.drawLine(new Point(1, 1), new Point(3, 3), 'X');
-
-            canvas.print();
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
         });
 
         it('should draw a diagonal line when the points are swapped', () => {
@@ -215,9 +206,7 @@ describe("Canvas", () => {
             canvas.create(3, 3);
 
             canvas.drawLine(new Point(3, 3), new Point(1, 1), 'X');
-
-            canvas.print();
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
         });
 
     });
@@ -248,9 +237,7 @@ describe("Canvas", () => {
 
             canvas.create(3, 3);
             canvas.area(new Point(1, 1), new Point(2, 3), 'X');
-
-            canvas.print();
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
         });
 
         it('should draw a rectangle on the canvas when the points are swapped', () => {
@@ -263,8 +250,7 @@ describe("Canvas", () => {
             canvas.create(3, 3);
             canvas.area(new Point(3, 2), new Point(1, 1), 'X');
 
-            canvas.print();
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
 
         });
     });
@@ -298,8 +284,7 @@ describe("Canvas", () => {
             canvas.drawLine(new Point(2, 1), new Point(3, 2), 'Y');
             canvas.fill(new Point(1, 1), 'X');
 
-            canvas.print();
-            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+            toMatchCanvas(canvas, expectedCanvas);
         });
     });
 });

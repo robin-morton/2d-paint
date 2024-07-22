@@ -1,9 +1,13 @@
 
+import { bgBlue, bgCyan, bgGreen, bgMagenta, bgRed, bgWhite, bgYellow, Format } from 'cli-color';
+import { Point } from './Point';
+
 export class Canvas {
 
     private height: number;
     private width: number;
     private canvas: string[][] = []
+    private pixelColors: { [key: string]: Format } = {};
 
     static EMPTY_PIXEL = 'O';
 
@@ -17,6 +21,7 @@ export class Canvas {
     }
 
     private createBlankCanvas() {
+        this.pixelColors = {};
         this.canvas = [];
 
         const rows = Array(this.width).fill(Canvas.EMPTY_PIXEL);
@@ -28,6 +33,31 @@ export class Canvas {
     }
     private isWithinCanvas(point: Point): boolean {
         return point.getX() >= 1 && point.getX() <= this.width && point.getY() >= 1 && point.getY() <= this.height;
+    }
+
+    private randomPixel(): string {
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        return possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    private color(pixel: string): string {
+        if (!this.pixelColors[pixel]) {
+            const color = this.randomColor();
+            this.pixelColors[pixel] = color;
+        }
+        return this.pixelColors[pixel](pixel);
+    }
+
+    private randomColor(): Format {
+
+        const colors: Format[] = [bgBlue, bgGreen, bgMagenta, bgRed, bgYellow, bgCyan, bgWhite];
+
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        return randomColor;
+    }
+
+    private getPixel(point: Point): string {
+        return this.canvas[point.getY() - 1][point.getX() - 1];
     }
 
     /**
@@ -154,7 +184,7 @@ export class Canvas {
             return;
         }
 
-        this.canvas[point.getY() - 1][point.getX() - 1] = pixel;
+        this.canvas[point.getY() - 1][point.getX() - 1] = this.color(pixel);;
     }
 
     /**
