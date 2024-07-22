@@ -40,7 +40,7 @@ export class Canvas {
         return possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
-    private color(pixel: string): string {
+    private applyColor(pixel: string): string {
         if (!this.pixelColors[pixel]) {
             const color = this.randomColor();
             this.pixelColors[pixel] = color;
@@ -184,7 +184,12 @@ export class Canvas {
             return;
         }
 
-        this.canvas[point.getY() - 1][point.getX() - 1] = this.color(pixel);;
+        if (pixel && pixel.length > 1) {
+            console.log('Pixel must be a single character');
+            return;
+        }
+
+        this.canvas[point.getY() - 1][point.getX() - 1] = this.applyColor(pixel);;
     }
 
     /**

@@ -11,6 +11,7 @@ You can then start the program using the following commands:
 
 ```
 npm i
+npm run build
 npm run exec
 ```
 

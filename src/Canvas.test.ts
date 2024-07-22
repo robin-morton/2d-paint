@@ -15,6 +15,7 @@ describe("Canvas", () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
+
     describe("create", () => {
         it("should create a new canvas with the given width and height", () => {
             const width = 3;
@@ -90,6 +91,19 @@ describe("Canvas", () => {
             expect(console.log).toHaveBeenNthCalledWith(1, 'Canvas is not created yet, please execute \'create\' to create a canvas');
         });
 
+        it('should not set a point when the pixel value is not a single character', () => {
+            const width = 3;
+            const height = 5;
+            const x = 2;
+            const y = 3;
+            const pixel = 'XX';
+
+            canvas.create(width, height);
+            canvas.setPoint(new Point(x, y), pixel);
+
+            expect(console.log).toHaveBeenNthCalledWith(2, 'Pixel must be a single character');
+        });
+
         it('should not set a point on the canvas when the point is out of canvas', () => {
             const width = 3;
             const height = 5;
@@ -103,6 +117,8 @@ describe("Canvas", () => {
             expect(console.log).toHaveBeenNthCalledWith(2, `Point is out of canvas: x:${x}, y:${y}`);
             expect(console.log).toHaveBeenNthCalledWith(3, `Please provide an X value between 1 and ${width} and a Y value between 1 and ${height}`);
         });
+
+
     });
 
     describe('clear', () => {
