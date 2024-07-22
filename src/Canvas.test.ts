@@ -146,4 +146,79 @@ describe("Canvas", () => {
             expect(console.log).toHaveBeenLastCalledWith(blankCanvas);
         });
     });
+
+    describe('line', () => {
+
+        it('should not draw a line when the canvas has not been created', () => {
+            canvas.drawLine(new Point(1, 1), new Point(3, 1), 'X');
+            expect(console.log).toHaveBeenLastCalledWith('Canvas is not created yet, please execute \'create\' to create a canvas');
+        });
+
+        it('should not draw a line when a point is outside the canvas', () => {
+            const width = 3;
+            const height = 3;
+
+            canvas.create(width, height);
+            canvas.drawLine(new Point(1, 1), new Point(width + 1, height + 2), 'X');
+
+            expect(console.log).toHaveBeenNthCalledWith(2, 'A point of the line is outside the canvas');
+            expect(console.log).toHaveBeenNthCalledWith(3, 'Please provide an X value between 1 and 3 and a Y value between 1 and 3');
+        });
+        it('should draw a horizontal line on the canvas', () => {
+
+            const expectedCanvas =
+                'X X X' + '\n' +
+                'O O O' + '\n' +
+                'O O O';
+
+            canvas.create(3, 3);
+            canvas.drawLine(new Point(1, 1), new Point(3, 1), 'X');
+
+            canvas.print();
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+        });
+
+        it('should draw a vertical line on the canvas', () => {
+            const expectedCanvas =
+                'X O O' + '\n' +
+                'X O O' + '\n' +
+                'X O O';
+
+            canvas.create(3, 3);
+            canvas.drawLine(new Point(1, 1), new Point(1, 3), 'X');
+
+            canvas.print();
+
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+        });
+
+        it('should draw a diagonal line on the canvas', () => {
+            const expectedCanvas =
+                'X O O' + '\n' +
+                'O X O' + '\n' +
+                'O O X';
+
+            canvas.create(3, 3);
+
+            canvas.drawLine(new Point(1, 1), new Point(3, 3), 'X');
+
+            canvas.print();
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+        });
+
+        it('should draw a diagonal line when the points are swapped', () => {
+            const expectedCanvas =
+                'X O O' + '\n' +
+                'O X O' + '\n' +
+                'O O X';
+
+            canvas.create(3, 3);
+
+            canvas.drawLine(new Point(3, 3), new Point(1, 1), 'X');
+
+            canvas.print();
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+        });
+
+    });
 });

@@ -41,5 +41,11 @@ describe("CommandFactory", () => {
             const result = CommandFactory.fromString(command);
             expect(result).toBeInstanceOf(ClearCommand);
         });
+
+        it('should return a LineCommand instance when called with \'line\'', () => {
+            const command = 'line';
+            const result = CommandFactory.fromString(command);
+            expect(result).toBeInstanceOf(LineCommand);
+        });
     });
 });

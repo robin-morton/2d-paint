@@ -116,21 +116,27 @@ export class Canvas {
         this.canvas[point.getY() - 1][point.getX() - 1] = pixel;
     }
 
-    drawLine(point1: Point, point2: Point, pixel = this.randomPixel()): void {
+    /**
+     * Draws a line from point1 to point2 on the canvas. If a pixel is not
+     * provided, a random pixel will be generated.
+     * 
+     * If the canvas has not been created, it will not draw a line.
+     * 
+     * If a point of the line is outside the canvas, it will not draw a line.
+     * 
+     * @param point1 {Point} starting point of the line
+     * @param point2 {Point} ending point of the line
+     * @param pixel {string?} the pixel to draw the line with
+     */
+    drawLine(point1: Point, point2: Point, pixel: string | undefined = this.randomPixel()): void {
         if (!this.isAlreadyCreated()) {
             console.log('Canvas is not created yet, please execute \'create\' to create a canvas');
             return;
         }
 
-        if (!this.isWithinCanvas(point1)) {
-            console.log('Point 1 is out of canvas');
-            console.log('Please provide an X value between 1 and', this.width, 'and a Y value between 1 and', this.height);
-            return;
-        }
-
-        if (!this.isWithinCanvas(point2)) {
-            console.log('Point 2 is out of canvas');
-            console.log('Please provide an X value between 1 and', this.width, 'and a Y value between 1 and', this.height);
+        if (!this.isWithinCanvas(point1) || !this.isWithinCanvas(point2)) {
+            console.log('A point of the line is outside the canvas');
+            console.log(`Please provide an X value between 1 and ${this.width} and a Y value between 1 and ${this.height}`);
             return;
         }
 

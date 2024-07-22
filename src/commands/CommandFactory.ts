@@ -2,6 +2,7 @@ import { AbstractCommand } from "./AbstractCommand";
 import { ClearCommand } from "./ClearCommand";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
+import { LineCommand } from "./LineCommand";
 import { NoopCommand } from "./NoopCommand";
 import { PointCommand } from "./PointCommand";
 import { ShowCommand } from "./ShowCommand";
@@ -12,7 +13,8 @@ export class CommandFactory {
         'create',
         'show',
         'point',
-        'clear'];
+        'clear',
+        'line'];
 
 
     static isValid(command: string): boolean {
@@ -38,6 +40,8 @@ export class CommandFactory {
                 return new PointCommand();
             case 'clear':
                 return new ClearCommand();
+            case 'line':
+                return new LineCommand();
             case 'exit':
                 return new ExitCommand();
         }
