@@ -268,4 +268,38 @@ describe("Canvas", () => {
 
         });
     });
+
+    describe('fill', () => {
+
+        it('should not fill the area when the canvas has not been created', () => {
+            canvas.fill(new Point(1, 1), 'X');
+            expect(console.log).toHaveBeenLastCalledWith('Canvas is not created yet, please execute \'create\' to create a canvas');
+        });
+
+        it('should not fill the area when a point is outside the canvas', () => {
+            const width = 3;
+            const height = 3;
+
+            canvas.create(width, height);
+            const fillPoint = new Point(1, height + 1);
+            canvas.fill(fillPoint, 'X');
+
+            expect(console.log).toHaveBeenNthCalledWith(2, `Point is out of canvas; x:${fillPoint.getX()}, y:${fillPoint.getY()}`);
+            expect(console.log).toHaveBeenNthCalledWith(3, `Please provide an X value between 1 and ${width} and a Y value between 1 and ${height}`);
+        });
+
+        it('should fill the area on the canvas', () => {
+            const expectedCanvas =
+                'X Y O' + '\n' +
+                'X X Y' + '\n' +
+                'X X X';
+
+            canvas.create(3, 3);
+            canvas.drawLine(new Point(2, 1), new Point(3, 2), 'Y');
+            canvas.fill(new Point(1, 1), 'X');
+
+            canvas.print();
+            expect(console.log).toHaveBeenLastCalledWith(expectedCanvas);
+        });
+    });
 });

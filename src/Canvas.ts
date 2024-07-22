@@ -194,19 +194,64 @@ export class Canvas {
         }
     }
 
-    fill(point: Point, pixel = this.randomPixel()): void {
+    /**
+     * Fills an area of the canvas with the given pixel. If a pixel is not
+     * provided, a random pixel will be generated.
+     * Any pixel which is the same color as the starting point will be
+     * replaced with the new pixel. All adjacent pixels with the same value
+     * as the starting point will also be replaced.
+     * 
+     * i.e. all pixels which are connected to the starting point will be
+     * replaced within either the bounds of the canvas or a bounding line.
+     * 
+     * The fill does not fill diagonally adjacent pixels.
+     * 
+     * If the canvas has not been created, it will not fill an area.
+     * 
+     * If the point is out of the canvas, it will not fill an area.
+     * 
+     * @param point {Point}
+     * @param pixel {string?}
+     */
+    fill(point: Point, pixel: string = this.randomPixel()): void {
         if (!this.isAlreadyCreated()) {
             console.log('Canvas is not created yet, please execute \'create\' to create a canvas');
             return;
         }
 
         if (!this.isWithinCanvas(point)) {
-            console.log('Point is out of canvas; x:', point.getX(), 'y:', point.getY());
-            console.log('Please provide an X value between 1 and', this.width, 'and a Y value between 1 and', this.height);
+            console.log(`Point is out of canvas; x:${point.getX()}, y:${point.getY()}`);
+            console.log(`Please provide an X value between 1 and ${this.width} and a Y value between 1 and ${this.height}`);
             return;
         }
 
-        this.canvas[point.getY() - 1][point.getX() - 1] = pixel;
-    }
+        console.log('Filling area with pixel:', pixel);
+        const startingPixel = this.getPixel(point);
 
+        const stack: Point[] = [point];
+
+        // If the point is out of the canvas or the pixel is not the same as the starting pixel, skip it
+        const shouldSkip = (point: Point): boolean => {
+            return !this.isWithinCanvas(point) || this.getPixel(point) !== startingPixel;
+        }
+
+        while (stack.length > 0) {
+            const currentPoint = stack.pop();
+
+            if (!currentPoint) {
+                break;
+            }
+
+            if (shouldSkip(currentPoint)) {
+                continue;
+            }
+
+            this.setPoint(currentPoint, pixel);
+
+            stack.push(new Point(currentPoint.getX() + 1, currentPoint.getY()));
+            stack.push(new Point(currentPoint.getX() - 1, currentPoint.getY()));
+            stack.push(new Point(currentPoint.getX(), currentPoint.getY() + 1));
+            stack.push(new Point(currentPoint.getX(), currentPoint.getY() - 1));
+        }
+    }
 }

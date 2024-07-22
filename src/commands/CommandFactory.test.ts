@@ -3,6 +3,7 @@ import { ClearCommand } from "./ClearCommand";
 import { CommandFactory } from "./CommandFactory";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
+import { FillCommand } from "./FillCommand";
 import { LineCommand } from "./LineCommand";
 import { PointCommand } from "./PointCommand";
 import { ShowCommand } from "./ShowCommand";
@@ -54,6 +55,12 @@ describe("CommandFactory", () => {
             const command = 'area';
             const result = CommandFactory.fromString(command);
             expect(result).toBeInstanceOf(AreaCommand);
+        });
+
+        it('should return a FillCommand instance when called with \'fill\'', () => {
+            const command = 'fill';
+            const result = CommandFactory.fromString(command);
+            expect(result).toBeInstanceOf(FillCommand);
         });
     });
 });

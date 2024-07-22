@@ -3,6 +3,7 @@ import { AreaCommand } from "./AreaCommand";
 import { ClearCommand } from "./ClearCommand";
 import { CreateCommand } from "./CreateCommand";
 import { ExitCommand } from "./ExitCommand";
+import { FillCommand } from "./FillCommand";
 import { LineCommand } from "./LineCommand";
 import { NoopCommand } from "./NoopCommand";
 import { PointCommand } from "./PointCommand";
@@ -17,6 +18,7 @@ export class CommandFactory {
         'clear',
         'line',
         'area',
+        'fill'];
 
 
     static isValid(command: string): boolean {
@@ -46,6 +48,8 @@ export class CommandFactory {
                 return new LineCommand();
             case 'area':
                 return new AreaCommand();
+            case 'fill':
+                return new FillCommand();
             case 'exit':
                 return new ExitCommand();
         }
